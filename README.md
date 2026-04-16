@@ -8,6 +8,7 @@ Dự án xây dựng hệ thống Backend cho cửa hàng bán trang phục và 
 - **Database:** SQL Server (sử dụng Entity Framework Core)
 - **Công cụ hỗ trợ:** Swagger UI (OpenAPI), Git/GitHub
 - **Kiến trúc:** Model-View-Controller (MVC) cho Web API
+- **Frontend:** Cozastore Template (HTML5, CSS3, JS)
 
 ## 🛠 Hướng dẫn cài đặt & Chạy dự án
 1. Clone dự án từ GitHub.
