@@ -229,7 +229,69 @@ namespace LeNguyenKhang_2122110497.Migrations
                             Price = 450000m,
                             Slug = "wig-furina-xanh-trang",
                             StockQuantity = 20
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BrandId = 2,
+                            CategoryId = 3,
+                            Image = "IMG_8626.jpg",
+                            Name = "Đồ Agnes Tachyon cosplay",
+                            Price = 300000m,
+                            Slug = "Agnes-Tachyon-cosplay",
+                            StockQuantity = 15
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BrandId = 1,
+                            CategoryId = 1,
+                            Image = "IMG_8601.jpg",
+                            Name = "Đồ Gao Red coplay",
+                            Price = 1200000m,
+                            Slug = "gao-red-cosplay",
+                            StockQuantity = 8
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BrandId = 3,
+                            CategoryId = 2,
+                            Image = "IMG_8662.jpg",
+                            Name = "Đồ Columbina Cosplay",
+                            Price = 500000m,
+                            Slug = "do-columbina-cosplay",
+                            StockQuantity = 25
                         });
+                });
+
+            modelBuilder.Entity("LeNguyenKhang_2122110497.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("LeNguyenKhang_2122110497.Models.Order_detail", b =>

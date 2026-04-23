@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Đăng nhập - Coza Store</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+</head>
+<body class="animsition">
+    <div class="container p-t-100">
+        <div class="card p-4 shadow-sm mx-auto" style="max-width: 400px; border-radius: 15px;">
+            <h3 class="ltext-103 cl5 p-b-30 text-center">ĐĂNG NHẬP</h3>
+
+            <div class="m-b-20">
+                <label class="stext-110 cl2">Tên đăng nhập</label>
+                <input type="text" id="loginUser" class="form-control">
+            </div>
+
+            <div class="m-b-25">
+                <label class="stext-110 cl2">Mật khẩu</label>
+                <input type="password" id="loginPass" class="form-control">
+            </div>
+
+            <button class="flex-c-m stext-101 cl0 size-116 bg1 bor14 hov-btn1 p-lr-15 trans-04 pointer" onclick="handleLogin()">
+                ĐĂNG NHẬP
+            </button>
+
+            <div class="text-center p-t-20">
+                <a href="register.html" class="stext-109 cl1">Tạo tài khoản mới</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Khang dán đoạn hàm handleLogin vào đây
+        async function handleLogin() {
+            const userValue = document.getElementById('loginUser').value;
+            const passValue = document.getElementById('loginPass').value;
+
+            // Log ra để Khang kiểm tra xem có lấy được dữ liệu từ ô nhập không
+            console.log("Đang gửi:", { Username: userValue, Password: passValue });
+
+            try {
+                const response = await fetch('https://localhost:7064/api/User/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        Username: userValue,
+                        Password: passValue
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('user', JSON.stringify(data));
+                    alert("Đăng nhập thành công!");
+
+                    if (data.role === 'Admin' || data.role === 'admin') {
+                        window.location.href = "admin.html";
+                    } else {
+                        window.location.href = "index.html";
+                    }
+                } else {
+                    // Nếu lỗi 400, dòng này sẽ hiện chi tiết lỗi từ Server
+                    const errorData = await response.json();
+                    console.error("Chi tiết lỗi từ Server:", errorData);
+                    alert("Lỗi: " + (errorData.message || "Tài khoản hoặc mật khẩu không chính xác!"));
+                }
+            } catch (err) {
+                console.error("Lỗi kết nối:", err);
+            }
+        }
+    </script>
+</body>
+</html>

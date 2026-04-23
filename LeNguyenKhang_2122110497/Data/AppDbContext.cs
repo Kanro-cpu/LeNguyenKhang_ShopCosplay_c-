@@ -14,6 +14,7 @@ namespace LeNguyenKhang_2122110497.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Order_detail> OrderDetails { get; set; } // Kiểm tra kỹ tên class Order_detail này
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -54,6 +55,39 @@ namespace LeNguyenKhang_2122110497.Data
                     CategoryId = 2,
                     BrandId = 3,
                     Image = "furina-wig.jpg"
+                },
+                new Product
+                {
+                    Id = 3,
+                    Name = "Đồ Agnes Tachyon cosplay",
+                    Slug = "Agnes-Tachyon-cosplay",
+                    Price = 300000m,
+                    StockQuantity = 15,
+                    CategoryId = 3,
+                    BrandId = 2,
+                    Image = "IMG_8626.jpg"
+                },
+                new Product
+                {
+                    Id = 4,
+                    Name = "Đồ Gao Red coplay",
+                    Slug = "gao-red-cosplay",
+                    Price = 1200000m,
+                    StockQuantity = 8,
+                    CategoryId = 1,
+                    BrandId = 1,
+                    Image = "IMG_8601.jpg"
+                },
+                new Product
+                {
+                    Id = 5,
+                    Name = "Đồ Columbina Cosplay",
+                    Slug = "do-columbina-cosplay",
+                    Price = 500000m,
+                    StockQuantity = 25,
+                    CategoryId = 2,
+                    BrandId = 3,
+                    Image = "IMG_8662.jpg"
                 }
             );
         }

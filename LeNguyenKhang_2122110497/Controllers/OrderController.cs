@@ -45,5 +45,26 @@ namespace LeNguyenKhang_2122110497.Controllers
             if (order == null) return NotFound();
             return Ok(order);
         }
+    
+        // 3. CẬP NHẬT ĐƠN HÀNG (PUT) - Ví dụ đổi trạng thái đơn hàng
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, Order item)
+        {
+            if (id != item.Id) return BadRequest();
+            _context.Entry(item).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        // 4. HỦY/XÓA ĐƠN HÀNG (DELETE)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var item = await _context.Orders.FindAsync(id);
+            if (item == null) return NotFound();
+            _context.Orders.Remove(item);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }

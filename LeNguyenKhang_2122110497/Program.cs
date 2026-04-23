@@ -8,12 +8,24 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // 2. Đăng ký Controller
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.SuppressModelStateInvalidFilter = true; // Tắt tự động báo lỗi 400
+    });
 
 // 3. Đăng ký Swagger (Thay thế cho AddOpenApi)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 var app = builder.Build();
 
 // 4. Cấu hình giao diện Swagger
@@ -24,7 +36,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowAll"); // Dòng này cực kỳ quan trọng để cho phép Frontend gọi API
 app.UseAuthorization();
 app.MapControllers();
-
+app.UseDefaultFiles(); // Tự tìm index.html
+app.UseStaticFiles();  // Cho phép load CSS/Ảnh
 app.Run();

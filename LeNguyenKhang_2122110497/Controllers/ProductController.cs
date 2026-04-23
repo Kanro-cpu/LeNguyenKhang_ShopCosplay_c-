@@ -34,17 +34,32 @@ namespace LeNguyenKhang_2122110497.Controllers
             return Ok(products);
         }
 
-        // GET: api/Product/5
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+   
+        [HttpPost]
+        public async Task<ActionResult<Product>> Post(Product item)
         {
-            var product = _context.Products
-                .Include(p => p.Category)
-                .Include(p => p.Brand)
-                .FirstOrDefault(p => p.Id == id);
+            _context.Products.Add(item);
+            await _context.SaveChangesAsync();
+            return item;
+        }
 
-            if (product == null) return NotFound();
-            return Ok(product);
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, Product item)
+        {
+            if (id != item.Id) return BadRequest();
+            _context.Entry(item).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var item = await _context.Products.FindAsync(id);
+            if (item == null) return NotFound();
+            _context.Products.Remove(item);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
     }
 }
